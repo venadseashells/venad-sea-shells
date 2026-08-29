@@ -485,7 +485,99 @@ footer p {
   .hero {
     padding: 55px 0;
   }
+/* AUTH */
 
+.account-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.account-btn {
+  border: 1px solid #0878b9;
+  background: white;
+  color: #0878b9;
+  padding: 9px 14px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.account-btn:hover {
+  background: #0878b9;
+  color: white;
+}
+
+.signup-btn {
+  background: #0878b9;
+  color: white;
+}
+
+.auth-modal {
+  max-width: 430px;
+}
+
+.auth-modal h2 {
+  margin-bottom: 8px;
+}
+
+.auth-modal > p {
+  color: #718294;
+  line-height: 1.5;
+}
+
+.auth-input {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border: 1px solid #ccdce7;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+}
+
+.auth-input:focus {
+  border-color: #0878b9;
+  box-shadow: 0 0 0 3px rgba(8,120,185,0.10);
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-switch button {
+  border: 0;
+  background: none;
+  color: #0878b9;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#authStatus {
+  text-align: center;
+  font-weight: bold;
+  color: #0878b9;
+  min-height: 20px;
+}
+
+@media (max-width: 600px) {
+
+  .account-buttons {
+    gap: 5px;
+  }
+
+  .account-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .cart-btn {
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+}
   .hero h1 {
     font-size: 40px;
   }
