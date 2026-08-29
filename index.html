@@ -32,7 +32,15 @@
         <a href="#reviews">Reviews</a>
         <a href="#contact">Contact</a>
       </nav>
+<div class="account-buttons">
+  <button class="account-btn" onclick="openAuth('login')">
+    🔐 Login
+  </button>
 
+  <button class="account-btn signup-btn" onclick="openAuth('signup')">
+    👤 Sign Up
+  </button>
+</div>
       <button class="cart-btn" onclick="openCart()">
         🛒 Cart <span id="cartCount">0</span>
       </button>
@@ -280,6 +288,58 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
+<!-- AUTH POPUP -->
 
+<div id="authModal" class="modal hidden">
+
+  <div class="cart-modal auth-modal">
+
+    <button class="close" onclick="closeAuth()">×</button>
+
+    <h2 id="authTitle">🔐 Login</h2>
+
+    <p id="authMessage">
+      Login to your VENAD SEA SHELLS account
+    </p>
+
+    <input
+      id="authEmail"
+      type="email"
+      placeholder="Email address"
+      class="auth-input"
+    >
+
+    <input
+      id="authPassword"
+      type="password"
+      placeholder="Password"
+      class="auth-input"
+    >
+
+    <button
+      class="btn primary full"
+      onclick="submitAuth()"
+    >
+      Continue
+    </button>
+
+    <p class="auth-switch">
+      <span id="authSwitchText">
+        Don't have an account?
+      </span>
+
+      <button
+        onclick="switchAuthMode()"
+        id="authSwitchButton"
+      >
+        Sign Up
+      </button>
+    </p>
+
+    <p id="authStatus"></p>
+
+  </div>
+
+</div>
 </body>
 </html>
