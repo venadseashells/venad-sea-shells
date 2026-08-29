@@ -1,3 +1,15 @@
+
+const SUPABASE_URL = "https://rnszcvkikxonqxcdlysi.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_Iw_68NJGXWDV2nNyo5ByfQ_S4IE416K";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+let authMode = "login";
 const products = [
   {
     id: 1,
