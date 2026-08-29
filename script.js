@@ -393,3 +393,212 @@ loadCategories();
 renderProducts();
 
 updateCart();
+/* =========================
+   AUTHENTICATION
+========================= */
+
+function openAuth(mode = "login") {
+  authMode = mode;
+
+  document
+    .getElementById("authModal")
+    .classList.remove("hidden");
+
+  updateAuthUI();
+}
+
+function closeAuth() {
+  document
+    .getElementById("authModal")
+    .classList.add("hidden");
+
+  document.getElementById("authStatus").textContent = "";
+}
+
+function switchAuthMode() {
+  authMode =
+    authMode === "login"
+      ? "signup"
+      : "login";
+
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+
+  const title =
+    document.getElementById("authTitle");
+
+  const message =
+    document.getElementById("authMessage");
+
+  const switchText =
+    document.getElementById("authSwitchText");
+
+  const switchButton =
+    document.getElementById("authSwitchButton");
+
+  if (authMode === "login") {
+
+    title.textContent = "🔐 Login";
+
+    message.textContent =
+      "Login to your VENAD SEA SHELLS account";
+
+    switchText.textContent =
+      "Don't have an account?";
+
+    switchButton.textContent =
+      "Sign Up";
+
+  } else {
+
+    title.textContent = "👤 Create Account";
+
+    message.textContent =
+      "Create your VENAD SEA SHELLS account";
+
+    switchText.textContent =
+      "Already have an account?";
+
+    switchButton.textContent =
+      "Login";
+  }
+}
+
+
+async function submitAuth() {
+
+  const email =
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("authPassword")
+      .value;
+
+  const status =
+    document.getElementById("authStatus");
+
+
+  if (!email || !password) {
+
+    status.textContent =
+      "Please enter email and password.";
+
+    return;
+  }
+
+
+  status.textContent =
+    "Please wait...";
+
+
+  try {
+
+    if (authMode === "signup") {
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+          email: email,
+          password: password
+        });
+
+      if (error) throw error;
+
+      status.textContent =
+        "Account created! Check your email to verify your account.";
+
+    } else {
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+      if (error) throw error;
+
+      status.textContent =
+        "Login successful! 🎉";
+
+      setTimeout(() => {
+        closeAuth();
+        updateAccountButton();
+      }, 1000);
+    }
+
+  } catch (error) {
+
+    status.textContent =
+      error.message;
+  }
+}
+
+
+async function logoutUser() {
+
+  await supabaseClient.auth.signOut();
+
+  updateAccountButton();
+}
+
+
+async function updateAccountButton() {
+
+  const { data } =
+    await supabaseClient.auth.getUser();
+
+  const loginButton =
+    document.querySelector(".account-buttons");
+
+
+  if (!loginButton) return;
+
+
+  if (data.user) {
+
+    loginButton.innerHTML = `
+      <button
+        class="account-btn"
+        onclick="logoutUser()"
+      >
+        🚪 Logout
+      </button>
+    `;
+
+  } else {
+
+    loginButton.innerHTML = `
+      <button
+        class="account-btn"
+        onclick="openAuth('login')"
+      >
+        🔐 Login
+      </button>
+
+      <button
+        class="account-btn signup-btn"
+        onclick="openAuth('signup')"
+      >
+        👤 Sign Up
+      </button>
+    `;
+  }
+}
+
+
+/* CHECK LOGIN STATUS */
+
+supabaseClient.auth.onAuthStateChange(
+  (event, session) => {
+
+    updateAccountButton();
+
+  }
+);
+
+updateAccountButton();
